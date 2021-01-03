@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "AzureCosmosSparkTutorial.DataGenerator": {
+      "commandName": "Project"
+    }
+  }
+}
