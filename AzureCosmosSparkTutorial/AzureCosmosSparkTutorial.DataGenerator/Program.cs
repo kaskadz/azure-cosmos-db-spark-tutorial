@@ -23,7 +23,7 @@ namespace AzureCosmosSparkTutorial.DataGenerator
 
             var commandLineOptions = configuration.Get<CommandLineOptions>();
 
-            ICosmosService cosmosService = new MockCosmosService();
+            ICosmosService cosmosService = CreateCosmosService(connectionOptions);
             var ingestDataReader = new IngestDataReader(commandLineOptions.File);
             var dataSupplier = new DataSupplier(cosmosService, ingestDataReader);
 
