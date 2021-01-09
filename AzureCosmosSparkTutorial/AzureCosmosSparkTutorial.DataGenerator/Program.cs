@@ -21,21 +21,16 @@ namespace AzureCosmosSparkTutorial.DataGenerator
                 .GetSection(ConnectionOptions.Section)
                 .Get<ConnectionOptions>() ?? throw new InvalidOperationException("Couldn't read connection options");
 
-            string sourceFilePath = configuration.GetValue<string>("file") ??
-                                    throw new InvalidOperationException("Source file was not provided");
+            var commandLineOptions = configuration.Get<CommandLineOptions>();
 
-            int skip = configuration.GetValue<int>("skip");
-            int count = configuration.GetValue<int>("count");
-
-            var cosmosClient = new CosmosClient(connectionOptions.EndpointUri, connectionOptions.PrimaryKey);
-            var cosmosService = new CosmosService(cosmosClient);
-            var ingestDataReader = new IngestDataReader(sourceFilePath);
+            ICosmosService cosmosService = new MockCosmosService();
+            var ingestDataReader = new IngestDataReader(commandLineOptions.File);
             var dataSupplier = new DataSupplier(cosmosService, ingestDataReader);
 
             try
             {
                 Console.WriteLine("Beginning operations...\n");
-                await Execute(cosmosService, dataSupplier, skip, count);
+                await Execute(cosmosService, dataSupplier, commandLineOptions.Skip, commandLineOptions.Take);
             }
             catch (CosmosException de)
             {
@@ -48,16 +43,21 @@ namespace AzureCosmosSparkTutorial.DataGenerator
             }
             finally
             {
-                cosmosClient.Dispose();
                 cosmosService.Dispose();
                 Console.WriteLine("Completed.");
             }
         }
 
-        private static async Task Execute(CosmosService cosmosService, DataSupplier dataSupplier, int skip, int count)
+        private static ICosmosService CreateCosmosService(ConnectionOptions options)
+        {
+            var cosmosClient = new CosmosClient(options.EndpointUri, options.PrimaryKey);
+            return new CosmosService(cosmosClient);
+        }
+
+        private static async Task Execute(ICosmosService cosmosService, DataSupplier dataSupplier, int skip, int count)
         {
             var retailDb = await cosmosService.CreateDatabaseAsync("RetailDb");
-            var transactionsContainer = await cosmosService.CreateContainerAsync(retailDb, "transactions",
+            var transactionsContainer = await cosmosService.CreateContainerAsync(retailDb, "invoices",
                 $"/{nameof(TransactionElementEntry.Country)}");
 
             await dataSupplier.IngestData(transactionsContainer, skip, count);

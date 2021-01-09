@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using AzureCosmosSparkTutorial.DataGenerator.Model;
@@ -34,6 +35,7 @@ namespace AzureCosmosSparkTutorial.DataGenerator.Services
             var jsonSerializerSettings = new JsonSerializerSettings();
             var deserializeObject =
                 JsonConvert.DeserializeObject<TransactionElementEntry>(serializedEntry, jsonSerializerSettings);
+            deserializeObject.InvoiceDate = DateTime.Now;
             return deserializeObject;
         }
     }

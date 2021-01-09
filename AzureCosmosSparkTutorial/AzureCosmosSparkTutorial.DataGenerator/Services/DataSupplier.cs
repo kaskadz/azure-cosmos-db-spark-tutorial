@@ -11,7 +11,7 @@ namespace AzureCosmosSparkTutorial.DataGenerator.Services
 {
     public class DataSupplier
     {
-        private readonly CosmosService _cosmosService;
+        private readonly ICosmosService _cosmosService;
         private readonly IngestDataReader _ingestDataReader;
 
         private static readonly ProgressBarOptions ProgressBarOptions = new()
@@ -26,22 +26,22 @@ namespace AzureCosmosSparkTutorial.DataGenerator.Services
             DisplayTimeInRealTime = true
         };
 
-        public DataSupplier(CosmosService cosmosService, IngestDataReader ingestDataReader)
+        public DataSupplier(ICosmosService cosmosService, IngestDataReader ingestDataReader)
         {
             _cosmosService = cosmosService;
             _ingestDataReader = ingestDataReader;
         }
 
-        public async Task IngestData(Container container, int skip, int count)
+        public async Task IngestData(Container container, int skip, int take)
         {
             IAsyncEnumerable<TransactionElementEntry> transactionsAsyncEnumerable = _ingestDataReader
                 .GetTransactionsAsyncEnumerable()
                 .Skip(skip)
-                .Take(count);
+                .Take(take);
 
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             using var progress = new ProgressBar(
-                maxTicks: count,
+                maxTicks: take,
                 message: $"Documents progress",
                 options: ProgressBarOptions);
 
@@ -50,7 +50,7 @@ namespace AzureCosmosSparkTutorial.DataGenerator.Services
             {
                 await _cosmosService.AddItemToContainerAsync(container, transactionElementEntry);
                 progress.Tick();
-                progress.EstimatedDuration = CalculateEstimatedTimespan(count, stopwatch, progress);
+                progress.EstimatedDuration = CalculateEstimatedTimespan(take, stopwatch, progress);
             }
             stopwatch.Stop();
         }

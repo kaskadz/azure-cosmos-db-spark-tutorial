@@ -6,7 +6,7 @@ using Microsoft.Azure.Cosmos;
 
 namespace AzureCosmosSparkTutorial.DataGenerator.Services
 {
-    public class CosmosService : IDisposable
+    public class CosmosService : ICosmosService
     {
         private readonly CosmosClient _cosmosClient;
 
