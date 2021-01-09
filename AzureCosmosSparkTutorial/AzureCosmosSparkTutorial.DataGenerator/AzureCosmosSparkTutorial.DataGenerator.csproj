@@ -19,6 +19,7 @@
         <None Update="appsettings.json">
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using AzureCosmosSparkTutorial.Model;
+using AzureCosmosSparkTutorial.DataGenerator.Model;
 using Newtonsoft.Json;
 
 namespace AzureCosmosSparkTutorial.DataGenerator.Services

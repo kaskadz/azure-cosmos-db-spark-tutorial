@@ -1,6 +1,6 @@
 using Microsoft.Azure.Cosmos;
 
-namespace AzureCosmosSparkTutorial.Model
+namespace AzureCosmosSparkTutorial.DataGenerator.Model
 {
     public interface IPartitionKeyModel
     {

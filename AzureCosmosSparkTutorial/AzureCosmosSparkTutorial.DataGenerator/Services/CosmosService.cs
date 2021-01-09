@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using AzureCosmosSparkTutorial.Model;
+using AzureCosmosSparkTutorial.DataGenerator.Model;
 using Microsoft.Azure.Cosmos;
 
 namespace AzureCosmosSparkTutorial.DataGenerator.Services
@@ -31,7 +31,16 @@ namespace AzureCosmosSparkTutorial.DataGenerator.Services
         public async Task<Container> CreateContainerAsync(Database database, string containerId,
             string partitionKeyPath)
         {
-            var container = await database.CreateContainerIfNotExistsAsync(containerId, partitionKeyPath);
+            var containerProperties = new ContainerProperties(containerId, partitionKeyPath)
+            {
+                AnalyticalStoreTimeToLiveInSeconds = -1
+            };
+            var throughputProperties = ThroughputProperties.CreateManualThroughput(400);
+            var containerRequestOptions = new ContainerRequestOptions();
+            var container = await database.CreateContainerIfNotExistsAsync(
+                containerProperties,
+                throughputProperties,
+                containerRequestOptions);
             Console.WriteLine("Created Container: {0}\n", container.Container.Id);
             return container;
         }

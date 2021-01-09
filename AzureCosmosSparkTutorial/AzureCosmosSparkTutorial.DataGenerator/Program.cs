@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AzureCosmosSparkTutorial.DataGenerator.Model;
 using AzureCosmosSparkTutorial.DataGenerator.Options;
 using AzureCosmosSparkTutorial.DataGenerator.Services;
-using AzureCosmosSparkTutorial.Model;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Configuration;
 

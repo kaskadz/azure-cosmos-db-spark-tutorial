@@ -2,7 +2,7 @@ using System;
 using Microsoft.Azure.Cosmos;
 using Newtonsoft.Json;
 
-namespace AzureCosmosSparkTutorial.Model
+namespace AzureCosmosSparkTutorial.DataGenerator.Model
 {
     public class TransactionElementEntry : IPartitionKeyModel
     {
