@@ -1,4 +1,4 @@
-namespace AzureCosmosSparkTutorial.DataGenerator.Model
+namespace AzureCosmosSparkTutorial.Common.Entry
 {
     public class ItemEntry
     {

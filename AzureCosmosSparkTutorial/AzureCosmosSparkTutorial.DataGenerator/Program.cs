@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AzureCosmosSparkTutorial.DataGenerator.Model;
-using AzureCosmosSparkTutorial.DataGenerator.Options;
+using AzureCosmosSparkTutorial.Common.Entry;
+using AzureCosmosSparkTutorial.Common.Options;
+using AzureCosmosSparkTutorial.Common.Utilities;
 using AzureCosmosSparkTutorial.DataGenerator.Services;
 using Microsoft.Azure.Cosmos;
-using Microsoft.Extensions.Configuration;
 
 namespace AzureCosmosSparkTutorial.DataGenerator
 {
@@ -12,16 +12,7 @@ namespace AzureCosmosSparkTutorial.DataGenerator
     {
         public static async Task Main(string[] args)
         {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddCommandLine(args)
-                .Build();
-
-            var connectionOptions = configuration
-                .GetSection(ConnectionOptions.Section)
-                .Get<ConnectionOptions>() ?? throw new InvalidOperationException("Couldn't read connection options");
-
-            var commandLineOptions = configuration.Get<CommandLineOptions>();
+            var (commandLineOptions, connectionOptions) = ConfigurationLoader.LoadConfiguration(args);
 
             ICosmosService cosmosService = CreateCosmosService(connectionOptions);
             var ingestDataReader = new IngestDataReader(commandLineOptions.File);

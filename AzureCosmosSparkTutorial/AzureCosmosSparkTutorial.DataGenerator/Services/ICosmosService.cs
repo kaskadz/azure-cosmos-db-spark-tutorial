@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using AzureCosmosSparkTutorial.DataGenerator.Model;
+using AzureCosmosSparkTutorial.Common.Entry;
 using Microsoft.Azure.Cosmos;
 
 namespace AzureCosmosSparkTutorial.DataGenerator.Services

@@ -1,4 +1,4 @@
-namespace AzureCosmosSparkTutorial.DataGenerator.Options
+namespace AzureCosmosSparkTutorial.Common.Options
 {
     public class ConnectionOptions
     {

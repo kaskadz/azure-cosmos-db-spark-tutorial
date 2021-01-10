@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using AzureCosmosSparkTutorial.DataGenerator.Model;
+using AzureCosmosSparkTutorial.Common.Entry;
 using Microsoft.Azure.Cosmos;
 using ShellProgressBar;
 

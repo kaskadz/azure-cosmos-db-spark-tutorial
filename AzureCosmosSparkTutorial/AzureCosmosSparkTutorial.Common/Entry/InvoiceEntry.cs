@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Azure.Cosmos;
-using Newtonsoft.Json;
 
-namespace AzureCosmosSparkTutorial.DataGenerator.Model
+namespace AzureCosmosSparkTutorial.Common.Entry
 {
-    public class TransactionElementEntry : IPartitionKeyModel
+    public class TransactionElementEntry : EntryBase, IPartitionKeyModel
     {
-        [JsonProperty(PropertyName = "id")]
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public string InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
         public string Country { get; set; }
         public long? CustomerId { get; set; }
