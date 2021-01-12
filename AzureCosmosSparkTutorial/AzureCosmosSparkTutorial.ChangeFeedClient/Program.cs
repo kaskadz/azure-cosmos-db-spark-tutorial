@@ -17,7 +17,7 @@ namespace AzureCosmosSparkTutorial.ChangeFeedClient
             var (commandLineOptions, connectionOptions) = ConfigurationLoader.LoadConfiguration(args);
 
             var subscription = commandLineOptions.Sub;
-            Task task = subscription switch
+            Task<IChangeFeedWriter> task = subscription switch
             {
                 "clients" => ChangeFeedConsoleWriter<ClientStatsEntry>.InitializeAsync(connectionOptions, "RetailDb",
                     "clients", ClientStatsEntry.PartitionKeyPath, ChangeHandler),
@@ -25,14 +25,28 @@ namespace AzureCosmosSparkTutorial.ChangeFeedClient
                     "countries", CountryStatsEntry.PartitionKeyPath, ChangeHandler),
                 _ => WriteHelp()
             };
+            
+            IChangeFeedWriter changeFeedWriter = await task;
 
-            await task;
+            try
+            {
+                await changeFeedWriter.ReportChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                changeFeedWriter.Dispose();
+            }
         }
 
-        private static Task WriteHelp()
+        private static Task<IChangeFeedWriter> WriteHelp()
         {
             Console.WriteLine("You have to specify --sub parameter { clients, countries }");
-            return Task.CompletedTask;
+            return Task.FromResult<IChangeFeedWriter>(null);
         }
 
         private static Task ChangeHandler<T>(IReadOnlyCollection<T> changes,

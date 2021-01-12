@@ -5,12 +5,12 @@ using Microsoft.Azure.Cosmos;
 
 namespace AzureCosmosSparkTutorial.ChangeFeedClient.Services
 {
-    public class ChangeFeedConsoleWriter<T> : IDisposable
+    public class ChangeFeedConsoleWriter<T> : IChangeFeedWriter
     {
         private readonly CosmosClient _cosmosClient;
         private readonly ChangeFeedProcessor _changeFeedProcessor;
 
-        public static async Task<ChangeFeedConsoleWriter<T>> InitializeAsync(ConnectionOptions connectionOptions,
+        public static async Task<IChangeFeedWriter> InitializeAsync(ConnectionOptions connectionOptions,
             string databaseName,
             string containerName,
             string partitionKeyPath,
@@ -41,7 +41,7 @@ namespace AzureCosmosSparkTutorial.ChangeFeedClient.Services
             _changeFeedProcessor = changeFeedProcessor;
         }
 
-        public async Task ReportChangesToConsoleAsync()
+        public async Task ReportChangesAsync()
         {
             await _changeFeedProcessor.StartAsync();
 
