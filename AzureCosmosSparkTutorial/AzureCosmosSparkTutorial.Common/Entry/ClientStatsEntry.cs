@@ -5,7 +5,7 @@ namespace AzureCosmosSparkTutorial.Common.Entry
 {
     public class ClientStatsEntry : IPartitionKeyModel
     {
-        public static readonly string PartitionKeyPath = $"/{nameof(ClientID)}";
+        public static readonly string PartitionKeyPath = "/id";
         
         [JsonProperty(PropertyName = "id")] public string ClientID { get; set; }
         public double ClientMoneySpent { get; set; }

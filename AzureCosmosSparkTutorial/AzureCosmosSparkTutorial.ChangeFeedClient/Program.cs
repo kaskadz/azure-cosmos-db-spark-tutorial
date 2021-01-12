@@ -28,18 +28,21 @@ namespace AzureCosmosSparkTutorial.ChangeFeedClient
             
             IChangeFeedWriter changeFeedWriter = await task;
 
-            try
+            if (changeFeedWriter != null)
             {
-                await changeFeedWriter.ReportChangesAsync();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            finally
-            {
-                changeFeedWriter.Dispose();
+                try
+                {
+                    await changeFeedWriter.ReportChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                finally
+                {
+                    changeFeedWriter.Dispose();
+                }
             }
         }
 
