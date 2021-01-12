@@ -20,9 +20,9 @@ namespace AzureCosmosSparkTutorial.ChangeFeedClient
             Task task = subscription switch
             {
                 "clients" => ChangeFeedConsoleWriter<ClientStatsEntry>.InitializeAsync(connectionOptions, "RetailDb",
-                    "clients", "/ClientID", ChangeHandler),
+                    "clients", ClientStatsEntry.PartitionKeyPath, ChangeHandler),
                 "countries" => ChangeFeedConsoleWriter<CountryStatsEntry>.InitializeAsync(connectionOptions, "RetailDb",
-                    "countries", "/Country", ChangeHandler),
+                    "countries", CountryStatsEntry.PartitionKeyPath, ChangeHandler),
                 _ => WriteHelp()
             };
 

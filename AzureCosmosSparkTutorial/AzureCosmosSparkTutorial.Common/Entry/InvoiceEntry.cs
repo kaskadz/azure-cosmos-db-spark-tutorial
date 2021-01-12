@@ -6,6 +6,8 @@ namespace AzureCosmosSparkTutorial.Common.Entry
 {
     public class TransactionElementEntry : EntryBase, IPartitionKeyModel
     {
+        public static readonly string PartitionKeyPath = $"/{nameof(Country)}";
+
         public DateTime InvoiceDate { get; set; }
         public string Country { get; set; }
         public long? CustomerId { get; set; }

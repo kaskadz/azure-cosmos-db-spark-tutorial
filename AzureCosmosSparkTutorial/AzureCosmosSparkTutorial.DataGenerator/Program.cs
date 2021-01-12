@@ -49,7 +49,7 @@ namespace AzureCosmosSparkTutorial.DataGenerator
         {
             var retailDb = await cosmosService.CreateDatabaseAsync("RetailDb");
             var transactionsContainer = await cosmosService.CreateContainerAsync(retailDb, "invoices",
-                $"/{nameof(TransactionElementEntry.Country)}");
+                TransactionElementEntry.PartitionKeyPath);
 
             await dataSupplier.IngestData(transactionsContainer, skip, count);
         }
