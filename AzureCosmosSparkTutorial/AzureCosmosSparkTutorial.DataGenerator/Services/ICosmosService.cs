@@ -15,12 +15,8 @@ namespace AzureCosmosSparkTutorial.DataGenerator.Services
         /// <summary>
         /// Create the container if it does not exist. 
         /// </summary>
-        Task<Container> CreateContainerAsync(Database database, string containerId,
-            string partitionKeyPath);
+        Task<Container> CreateContainerAsync(Database database, string containerId, string partitionKeyPath);
 
-        Task AddItemToContainerAsync<T>(Container container, T item)
-            where T : IPartitionKeyModel;
-
-        Task DeleteDatabase(Database database);
+        Task AddItemToContainerAsync<T>(Container container, T item) where T : IPartitionKeyModel;
     }
 }

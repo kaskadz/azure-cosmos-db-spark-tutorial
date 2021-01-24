@@ -58,12 +58,6 @@ namespace AzureCosmosSparkTutorial.DataGenerator.Services
             }
         }
 
-        public async Task DeleteDatabase(Database database)
-        {
-            await database.DeleteAsync();
-            Console.WriteLine("Deleted Database: {0}\n", database.Id);
-        }
-
         public void Dispose()
         {
             _cosmosClient?.Dispose();
