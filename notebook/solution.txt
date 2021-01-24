@@ -1,0 +1,16 @@
+# Ex. 1.
+df\
+    .select('CustomerID', explode('Items'))\
+    .select('CustomerID', (col('col.Quantity') * col('col.UnitPrice')).alias('money'))\
+    .groupBy('CustomerID')\
+    .sum('money')\
+    .select(col('CustomerID'), col('sum(money)').alias('ClientMoneySpent'))
+
+# Ex. 2.	
+dfStream\
+    .withColumn('ts', to_timestamp('InvoiceDate'))\
+    .withWatermark('ts', '10 minutes')\
+    .select('Country')\
+    .groupBy('Country')\
+    .count()\
+    .select(col('Country').alias('id'), col('count').alias('Invoices'))
