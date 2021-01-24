@@ -30,6 +30,8 @@ namespace AzureCosmosSparkTutorial.ChangeFeedClient
 
             if (changeFeedWriter != null)
             {
+                Console.WriteLine("Listening for changes... (press q to quit)");
+                Console.WriteLine("Change batches are separated with '---'");
                 try
                 {
                     await changeFeedWriter.ReportChangesAsync();
@@ -42,6 +44,7 @@ namespace AzureCosmosSparkTutorial.ChangeFeedClient
                 finally
                 {
                     changeFeedWriter.Dispose();
+                    Console.WriteLine("Completed.");
                 }
             }
         }
