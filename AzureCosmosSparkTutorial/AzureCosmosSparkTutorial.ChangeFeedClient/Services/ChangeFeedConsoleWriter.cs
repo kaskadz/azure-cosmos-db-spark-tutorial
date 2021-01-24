@@ -27,7 +27,7 @@ namespace AzureCosmosSparkTutorial.ChangeFeedClient.Services
                 await database.CreateContainerIfNotExistsAsync($"{containerName}Lease", partitionKeyPath);
 
             ChangeFeedProcessor changeFeedProcessor = container
-                .GetChangeFeedProcessorBuilder<T>($"{containerName}ChangeFeed", changesHandler)
+                .GetChangeFeedProcessorBuilder($"{containerName}ChangeFeed", changesHandler)
                 .WithInstanceName("consoleProcessor")
                 .WithLeaseContainer(leaseContainer)
                 .Build();

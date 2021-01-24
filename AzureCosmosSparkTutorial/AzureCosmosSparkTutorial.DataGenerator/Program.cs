@@ -44,13 +44,13 @@ namespace AzureCosmosSparkTutorial.DataGenerator
             return new CosmosService(cosmosClient);
         }
 
-        private static async Task Execute(ICosmosService cosmosService, DataSupplier dataSupplier, int skip, int count)
+        private static async Task Execute(ICosmosService cosmosService, DataSupplier dataSupplier, int skip, int take)
         {
             var retailDb = await cosmosService.CreateDatabaseAsync("RetailDb");
             var transactionsContainer = await cosmosService.CreateContainerAsync(retailDb, "invoices",
                 TransactionElementEntry.PartitionKeyPath);
 
-            await dataSupplier.IngestData(transactionsContainer, skip, count);
+            await dataSupplier.IngestData(transactionsContainer, skip, take);
         }
     }
 }
