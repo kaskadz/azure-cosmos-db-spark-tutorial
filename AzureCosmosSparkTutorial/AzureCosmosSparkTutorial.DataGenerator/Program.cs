@@ -25,7 +25,6 @@ namespace AzureCosmosSparkTutorial.DataGenerator
             }
             catch (CosmosException de)
             {
-                Exception baseException = de.GetBaseException();
                 Console.WriteLine("{0} error occurred: {1}", de.StatusCode, de);
             }
             catch (Exception e)
